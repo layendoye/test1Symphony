@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Article[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ArticleRepository extends ServiceEntityRepository
-{
+{//cette classe est créée lorsqu'on a créé notre table article elle permet de recuperer les donnéées avec les find
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Article::class);

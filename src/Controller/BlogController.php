@@ -8,12 +8,12 @@ use App\Entity\Article;
 use App\Repository\ArticleRepository;
 
 class BlogController extends AbstractController
-{
+{//la classe est crée lorsqu'on a creer notre controller en faisant php bin/console make:controller
     /**
      * @Route("/blog", name="blog")
      */
-    public function index(ArticleRepository $repo)
-    {
+    public function index(ArticleRepository $repo){//affiche l'ensembles de nos articles
+        
         //$repo=$this->getDoctrine()->getRepository(Article::class);//demander à doctrine de nous creer un repository pour gerer nos articles (et pouvoir selectionner des données)
         // remplacer par ArticleRepository $repo
 
@@ -32,16 +32,15 @@ class BlogController extends AbstractController
      * @Route("/",name="home")
      */
     public function home(){
-        return $this->render('blog/home.html.twig',[
-            'title'=>"Bienvenue mes amis",
-            "age"=>20
-        ]);
+        //notre page d'accueil
+        return $this->render('blog/home.html.twig');
     }
 
     /**
      * @Route ("/blog/{id}", name="blog_show")
      */
     public function show(Article $article){//donnera l'article avec l'id données dans le path('blog_show',{'id': article.id })
+        //la fonction show permet d'afficher un article en entier
         return $this->render("blog/show.html.twig",[
             'article'=>$article
         ]);
