@@ -9,6 +9,8 @@ use App\Repository\ArticleRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ArticleType;
+use App\Form\CommentType;
+use App\Entity\Comment;
 
 class BlogController extends AbstractController
 {//la classe est crée lorsqu'on a creer notre controller en faisant php bin/console make:controller
@@ -69,10 +71,23 @@ class BlogController extends AbstractController
     /**
      * @Route ("/blog/{id}", name="blog_show")
      */
-    public function show(Article $article){//donnera l'article avec l'id données dans le path('blog_show',{'id': article.id })
-        //la fonction show permet d'afficher un article en entier
+    public function show(Article $article, Request $request,ObjectManager $manager){//donnera l'article avec l'id données dans le path('blog_show',{'id': article.id })
+                                          //la fonction show permet d'afficher un article en entier
+        
+        $comment=new Comment();
+        
+        $form= $this->createForm(CommentType::class,$comment);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $comment->setCreatedAt(new \DateTime())
+                    ->setArticle($article);
+            $manager->persist($comment);
+            $manager->flush();
+            return $this->redirectToRoute('blog_show',['id' => $article->getId()]);
+        }
         return $this->render("blog/show.html.twig",[
-            'article'=>$article
+            'article' => $article,
+            'commentForm'=> $form->createView()
         ]);
     }
 
