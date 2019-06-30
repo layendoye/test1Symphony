@@ -1,13 +1,26 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: ~ }
+        in_database: #le nom de notre providers 
+            entity: # il doit chercher les informations dans les entités
+                class: App\Entity\User #il doit le chercher dans l'entité User
+                property: email # il doit aller chercher les emails
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+
+            provider: in_database  # pour voir le site on doit se connecter et notre provider de reference pour ce connecté est in_database
+
+            form_login:
+                login_path: security_login # c est le nom de notre rooute dans public function login() sur securityController
+                check_path: security_login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
