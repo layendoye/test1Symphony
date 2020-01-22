@@ -45,7 +45,7 @@ class BlogController extends AbstractController
      *@Route("/blog/new", name="blog_create")
      *@Route("/blog/{id}/edit", name="blog_edit")
     */
-    public function form(Article $article=null,Request $request, ObjectManager $manager){//$request contiendra les données du formulaire
+    public function form(Request $request, ObjectManager $manager,Article $article=null){//$request contiendra les données du formulaire
         if(!$article){
            $article=new Article(); //si je n'est pas d article on cree un article vide car si on modifie il y aura un article (celui donné par Article $article)
         }

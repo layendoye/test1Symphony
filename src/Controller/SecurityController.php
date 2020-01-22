@@ -11,7 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
-{
+{//aller dans config -> packages -> packages  -> Security.yaml
     /**
      * @Route("/inscription", name="security_registration")
      */
